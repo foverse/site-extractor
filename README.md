@@ -1,75 +1,66 @@
-# Site Extractor Skill 🌐🎨
+# Site Extractor
 
-An AI agent skill to automatically extract a website's **design system** (colors, typography, spacing, components) and **content structure** (pages, outlines, metadata) from any URL.
+A skill for coding assistants and agents to extract a website's design system (tokens, colors, typography, components) and content hierarchy from a URL.
 
-Compatible with **Google Antigravity**, Cursor, Claude Code, and any AI agent tool that supports markdown-based skills.
+Works with Antigravity, Cursor, Claude Code, and other agent environments that support skill instructions.
 
----
+## What it extracts
 
-## ✨ Features
+- Page structure: Sitemap discovery, internal link crawl, metadata, headings outline, and clean markdown content.
+- Design tokens: Palette hex codes (primary, background, text, accent), typography scale, spacing, border radiuses, shadows, and media queries.
+- UI patterns: Header, navigation, card, button, and footer structure.
 
-- **Page Discovery:** Automatically inspects `sitemap.xml`, `robots.txt`, and crawls internal links.
-- **Content Extraction:** Parses clean Markdown, headings outline (H1-H3), images with alt text, and Schema.org JSON-LD.
-- **Design System Reverse-Engineering:**
-  - Extracts color palettes (primary, secondary, background, text, accent).
-  - Captures typography scales, font families, and line heights.
-  - Generates spacing scales, border radiuses, and shadow definitions.
-  - Identifies responsive CSS breakpoints and core UI components.
-- **Structured Outputs:**
-  - `pages.md`: Individual page outlines and cleaned content.
-  - `design-tokens.json`: Ready-to-import design tokens (Tailwind, CSS variables, Figma).
-  - `site-map.md`: Visual page hierarchy and depth map.
-  - `summary.md`: Key structural insights, templates, and consistency audit.
+Generated output files:
+- pages.md: Markdown exports per page.
+- design-tokens.json: Extracted tokens for Tailwind, CSS variables, or design tools.
+- site-map.md: Site hierarchy tree.
+- summary.md: Breakdown of templates and component consistency.
 
----
+## Installation
 
-## 🚀 Installation
+### Project level
 
-### Option 1: Project-Specific (Recommended for Antigravity)
-
-Clone or copy `SKILL.md` into your project's `.agents/skills/` directory:
+Place SKILL.md in your project's .agents/skills/site-extractor/ directory:
 
 ```bash
 mkdir -p .agents/skills/site-extractor
-# Copy SKILL.md into that folder
+cp SKILL.md .agents/skills/site-extractor/
 ```
 
-### Option 2: Global (Available Across All Projects)
+### Global level
 
-Copy `SKILL.md` into your global Antigravity config directory:
+To make the skill available across all projects on your machine:
 
+macOS / Linux:
 ```bash
-# macOS / Linux
 mkdir -p ~/.gemini/config/skills/site-extractor
 cp SKILL.md ~/.gemini/config/skills/site-extractor/
+```
 
-# Windows (PowerShell)
+Windows (PowerShell):
+```powershell
 New-Item -ItemType Directory -Force -Path "$HOME\.gemini\config\skills\site-extractor"
 Copy-Item SKILL.md "$HOME\.gemini\config\skills\site-extractor\"
 ```
 
----
+## Usage
 
-## 💡 How to Use
+Provide a URL to the agent and specify the scope if needed:
 
-Simply ask your AI agent:
+```text
+Extract the design system and pages from https://example.com
+```
 
-> *"Use the site-extractor skill to audit and extract design tokens from https://example.com"*
+Options:
+- Scope: design only, pages only, or both (default)
+- Page limit: e.g. limit to 20 pages
 
-Or specify parameters:
-- **Scope:** `design only`, `pages only`, or `both` (default: both)
-- **Page limit:** e.g., `limit to 10 pages` (default: 20)
+## Rules
 
----
+- Honors robots.txt and limits crawl rate to 1 request per second.
+- Skips authentication pages, private dashboards, and personal data forms.
+- For reference and architecture analysis only.
 
-## 🛡️ Ethical Rules & Guardrails
+## License
 
-- Honors `robots.txt` and rate limits (1 req/sec).
-- Never extracts authenticated screens, login forms, or personal data.
-- Intended for audit, design system reconstruction, and reference purposes.
-
----
-
-## 📄 License
-
-MIT License. See [LICENSE](./LICENSE) for details.
+MIT
